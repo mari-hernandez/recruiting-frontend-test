@@ -15,7 +15,6 @@ function FacturasComponent({ facturas, onFacturaSelect }) {
     const handleFacturaChange = (event) => {
         const selectedId = event.target.value;
         onFacturaSelect(selectedId);
-        console.log('Selected ID:', selectedId);
         setSelectedFacturaId(selectedId);
     };
 

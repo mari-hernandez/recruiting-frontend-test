@@ -9,7 +9,7 @@ import { transformAmount } from './shared_functions';
 
 
 
-function CreditNoteComponent({ creditNotes, id_factura }) {
+function CreditNoteComponent({ creditNotes, id_factura, onCreditNoteSelect }) {
     // Filter credit notes by reference: ${id-factura-seleccionada}
     creditNotes = creditNotes.filter(creditNote => creditNote.reference === id_factura);
     const [selectedCreditNoteId, setSelectedCreditNoteId] = useState('');
@@ -17,6 +17,7 @@ function CreditNoteComponent({ creditNotes, id_factura }) {
     const handleCreditNoteChange = (event) => {
         const selectedId = event.target.value;
         setSelectedCreditNoteId(selectedId);
+        onCreditNoteSelect(selectedId);
     };
 
     return (
