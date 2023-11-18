@@ -9,14 +9,14 @@ import { transformAmount } from './shared_functions';
 
 
 
-function FacturasComponent({ facturas, onFacturaSelect }) {
-    const [selectedFacturaId, setSelectedFacturaId] = useState('');
+function CreditNoteComponent({ creditNotes, id_factura }) {
+    // Filter credit notes by reference: ${id-factura-seleccionada}
+    creditNotes = creditNotes.filter(creditNote => creditNote.reference === id_factura);
+    const [selectedCreditNoteId, setSelectedCreditNoteId] = useState('');
 
-    const handleFacturaChange = (event) => {
+    const handleCreditNoteChange = (event) => {
         const selectedId = event.target.value;
-        onFacturaSelect(selectedId);
-        console.log('Selected ID:', selectedId);
-        setSelectedFacturaId(selectedId);
+        setSelectedCreditNoteId(selectedId);
     };
 
     return (
@@ -26,31 +26,31 @@ function FacturasComponent({ facturas, onFacturaSelect }) {
                 align='center'
                 style={{ color: 'black', fontWeight: 'bold' }}
             >
-                Selecciona una factura
+                Selecciona una nota de crédito
             </FormLabel>
             <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 name="radio-buttons-group"
-                value={selectedFacturaId}
-                onChange={handleFacturaChange}
+                value={selectedCreditNoteId}
+                onChange={handleCreditNoteChange}
             >
-                {facturas.map((factura) => (
-                    <TableRow key={factura.id}>
+                {creditNotes.map((CreditNote) => (
+                    <TableRow key={CreditNote.id}>
                         <TableCell align="right">
                             <FormControlLabel
-                                value={factura.id}
+                                value={CreditNote.id}
                                 control={<Radio />}
                                 label={(
                                     <span>
-                                        <span style={{ color: 'black' }}>{factura.id}</span>
-                                        <span style={{ color: 'gray' }}> ({factura.organization_id})</span>
+                                        <span style={{ color: 'black' }}>{CreditNote.id}</span>
+                                        <span style={{ color: 'gray' }}> ({CreditNote.organization_id})</span>
                                     </span>
                                 )}
                                 name="boton"
                             />
                         </TableCell>
-                        <TableCell align="center">{transformAmount(factura.amount, factura.currency)}</TableCell>
-                        <TableCell align="right" style={{ color: 'gray' }}>Recibida</TableCell>
+                        <TableCell align="center">{transformAmount(CreditNote.amount, CreditNote.currency)}</TableCell>
+                        <TableCell align="right" style={{ color: 'gray' }}>{id_factura}</TableCell>
                     </TableRow>
                 ))}
             </RadioGroup>
@@ -58,4 +58,4 @@ function FacturasComponent({ facturas, onFacturaSelect }) {
     );
 }
 
-export default FacturasComponent;
+export default CreditNoteComponent;
